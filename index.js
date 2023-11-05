@@ -14,7 +14,7 @@ app.use("/plants",plantRouter);
 app.use("/cart",cartRouter);
 
 const PORT = process.env.PORT
-app.listen(8080,async()=>{
+app.listen(PORT,async()=>{
 await connection
 console.log("DB is connected");
 console.log("server is running")
