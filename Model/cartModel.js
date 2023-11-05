@@ -8,7 +8,8 @@ const cartSchema = mongoose.Schema({
     category:String,
     price:Number,
     rating:Number,
-    email:String
+    email:String,
+    quantity:Number
 },
 {
     versionKey:false
