@@ -17,15 +17,60 @@ res.status(200).send({"postAdded":post})
 })
 
 
-plantRouter.get("/",async(req,res)=>{
-    try{
-        const post = await plantModel.find();
-        res.status(200).send(post)
+// plantRouter.get("/",async(req,res)=>{
+//     try{
+//         const post = await plantModel.find();
+//         res.status(200).send(post)
+//     }
+//     catch(err){
+//         res.status(400).send({"err":err})
+//     }
+// })
+
+
+plantRouter.get("/", async (req, res) => {
+    try {
+        const { category, sort, page, limit } = req.query;
+        let query = {};
+
+        if (category) {
+            query.category = category;
+        }
+
+        let sortOptions = {};
+        if (sort) {
+            if (sort === 'asc') {
+                sortOptions = { price: 1 }; // Sort in ascending order by price field
+            } else if (sort === 'desc') {
+                sortOptions = { price: -1 }; // Sort in descending order by price field
+            }
+        }
+
+        const perPage = parseInt(limit) || 6; // Number of records per page, default to 6 if not provided
+        const currentPage = parseInt(page) || 1; // Current page (default to 1 if not provided)
+
+        const skip = (currentPage - 1) * perPage;
+
+        const totalPosts = await plantModel.countDocuments(query);
+        const totalPages = Math.ceil(totalPosts / perPage);
+
+        const posts = await plantModel.find(query)
+            .sort(sortOptions)
+            .skip(skip)
+            .limit(perPage);
+
+        res.status(200).send({
+            plants: posts,
+            currentPage: currentPage,
+            totalPages: totalPages
+        });
+    } catch (err) {
+        res.status(400).send({ "err": err });
     }
-    catch(err){
-        res.status(400).send({"err":err})
-    }
-})
+});
+
+
+
 
 
 

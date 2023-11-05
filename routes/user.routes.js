@@ -11,7 +11,7 @@ userRouter.post("/signup",async(req,res)=>{
     try{
         const already = await userModel.findOne({email});
         if(already){
-            res.status(200).send("user already registered")
+            res.status(200).send({"userAlreadyPresent":"Yes"})
         }else{
             bcrypt.hash(password, 5, async(err, hash)=> {
                 // Store hash in your password DB.
@@ -44,7 +44,7 @@ userRouter.post("/login",async(req,res)=>{
             bcrypt.compare(password, user.password, async(err, result)=> {
               if(result){
                 var token = jwt.sign({email:user.email}, 'Ankit',{expiresIn:'7d'});
-                res.status(200).send({"loginSuccessful":`${token}`})
+                res.status(200).send({"token":`${token}`,"user":user})
               }else{
                 res.status(200).send({"msg":"wrong password"})
               }

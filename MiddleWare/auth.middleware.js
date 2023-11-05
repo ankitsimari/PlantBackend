@@ -12,9 +12,9 @@ const auth = async(req,res,next)=>{
                     req.body.email=decoded.email
                     next()
                 }else{
-                    res.send({"err":"login First"})
+                    res.send({"err":"login_First"})
                 }
-              });
+              });   
         }else{
             res.send({"msg":"not_authorized"})
         }
