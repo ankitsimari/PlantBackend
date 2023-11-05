@@ -1,6 +1,7 @@
 const express = require('express');
-const { auth } = require('../middleware/auth.middleware');
+
 const { cartModel } = require('../Model/cartModel');
+const { auth } = require('../MiddleWare/auth.middleware');
 const cartRouter = express.Router();
 
 cartRouter.use(auth);
