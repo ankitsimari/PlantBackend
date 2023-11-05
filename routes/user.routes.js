@@ -3,7 +3,8 @@ const { userModel } = require('../model/userModel');
 const userRouter = express.Router();
 const bcrypt= require("bcrypt");
 const jwt = require("jsonwebtoken");
-const { blacklist } = require('../middleware/blacklist');
+const { blacklist } = require('../MiddleWare/blacklist');
+
 
 
 userRouter.post("/signup",async(req,res)=>{
