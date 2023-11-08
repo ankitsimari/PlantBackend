@@ -45,7 +45,7 @@ plantRouter.get("/", async (req, res) => {
             }
         }
 
-        const perPage = parseInt(limit) || 6; // Number of records per page, default to 6 if not provided
+        const perPage = parseInt(limit) || Infinity; // Number of records per page, default to 6 if not provided
         const currentPage = parseInt(page) || 1; // Current page (default to 1 if not provided)
 
         const skip = (currentPage - 1) * perPage;
